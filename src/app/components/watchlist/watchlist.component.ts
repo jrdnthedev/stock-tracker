@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './watchlist.component.html',
-  styleUrl: './watchlist.component.scss'
+  styleUrl: './watchlist.component.scss',
 })
 export class WatchlistComponent {
-
+  list = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA'];
 }

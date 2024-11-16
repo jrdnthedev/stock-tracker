@@ -1,0 +1,14 @@
+#home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  > * {
+    flex: 1;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #home-container {
+    flex-direction: unset;
+  }
+}

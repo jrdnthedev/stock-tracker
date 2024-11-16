@@ -1,1 +1,13 @@
-<p>stock-details works!</p>
+<section id="stock-details">
+  <h2>{{ stock.Name }}</h2>
+  <p>{{ stock.Symbol }}</p>
+  <p>{{ stock.AssetType }}</p>
+  <p>{{ stock.Exchange }}</p>
+  <p>{{ stock.Country }}</p>
+  <p>{{ stock.Currency }}</p>
+  <p>{{ stock.Industry }}</p>
+  <p>{{ stock.Description }}</p>
+  <div id="add-container">
+    <button (click)="addToWatchlist(stock)">Add to Watchlist</button>
+  </div>
+</section>
