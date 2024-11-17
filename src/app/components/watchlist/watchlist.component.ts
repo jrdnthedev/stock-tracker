@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { StockService } from '../../services/stock/stock.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-watchlist',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './watchlist.component.html',
   styleUrl: './watchlist.component.scss',
 })
 export class WatchlistComponent {
-  list = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA'];
+  private stockService = inject(StockService);
+  list$ = this.stockService.watchlist;
 }

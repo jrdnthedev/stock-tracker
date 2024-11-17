@@ -1,6 +1,17 @@
-<app-search (searchString)="handleSearch($event)"></app-search>
+<app-search></app-search>
 
 <div id="home-container">
-  <app-stock-details></app-stock-details>
-  <app-watchlist></app-watchlist>
+  <div>
+    @if(stockDetails$) {
+    <app-stock-details [stock]="stockDetails$"></app-stock-details>
+    } @else {
+    <p>you have no stock details at this time</p>
+    }
+    <!-- <pre>
+      {{ stockDetails$ | async | json }}
+    </pre> -->
+  </div>
+  <div>
+    <app-watchlist></app-watchlist>
+  </div>
 </div>
