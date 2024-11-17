@@ -29,6 +29,14 @@ export class StockService {
     }
   }
 
+  removeFromWatchlist(stockSymbol: string) {
+    const currentWatchlist = this.watchlist.getValue();
+    const updatedWatchlist = currentWatchlist.filter(
+      (symbol) => symbol !== stockSymbol
+    );
+    this.watchlist.next(updatedWatchlist);
+  }
+
   getCompanyDetails(symbol: string): Observable<any> {
     console.log(symbol);
     return this.http.get(

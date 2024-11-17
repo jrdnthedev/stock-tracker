@@ -12,4 +12,8 @@ import { CommonModule } from '@angular/common';
 export class WatchlistComponent {
   private stockService = inject(StockService);
   list$ = this.stockService.watchlist;
+
+  remove(symbol: string) {
+    this.stockService.removeFromWatchlist(symbol);
+  }
 }
