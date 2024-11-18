@@ -1,6 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { StockService } from '../../services/stock/stock.service';
-import { WatchlistService } from '../../services/watchlist.service';
+import { WatchlistService } from '../../services/watchlist/watchlist.service';
 
 @Component({
   selector: 'app-stock-details',

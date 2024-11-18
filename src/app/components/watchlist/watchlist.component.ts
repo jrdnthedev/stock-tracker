@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WatchlistService } from '../../services/watchlist.service';
+import { WatchlistService } from '../../services/watchlist/watchlist.service';
 
 @Component({
   selector: 'app-watchlist',
