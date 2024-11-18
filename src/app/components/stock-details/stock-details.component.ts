@@ -1,5 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { StockService } from '../../services/stock/stock.service';
+import { WatchlistService } from '../../services/watchlist.service';
 
 @Component({
   selector: 'app-stock-details',
@@ -10,9 +11,10 @@ import { StockService } from '../../services/stock/stock.service';
 })
 export class StockDetailsComponent {
   @Input() stock: any;
-  private stockService = inject(StockService);
+  private watchlistService = inject(WatchlistService);
+
   addToWatchlist(stock: any) {
     console.log(stock.Symbol);
-    this.stockService.addToWatchlist(stock.Symbol);
+    this.watchlistService.addToWatchlist(stock.Symbol);
   }
 }

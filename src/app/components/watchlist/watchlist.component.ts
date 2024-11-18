@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { StockService } from '../../services/stock/stock.service';
 import { CommonModule } from '@angular/common';
+import { WatchlistService } from '../../services/watchlist.service';
 
 @Component({
   selector: 'app-watchlist',
@@ -10,10 +10,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './watchlist.component.scss',
 })
 export class WatchlistComponent {
-  private stockService = inject(StockService);
-  list$ = this.stockService.watchlist;
+  private watchlistService = inject(WatchlistService);
+  list$ = this.watchlistService.watchlist;
 
   remove(symbol: string) {
-    this.stockService.removeFromWatchlist(symbol);
+    this.watchlistService.removeFromWatchlist(symbol);
   }
 }
