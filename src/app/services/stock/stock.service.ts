@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { envrionment } from '../../../../environments/environment';
 import { COMPANY_PROFILE } from '../../types/stock.const';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { StockMetaData } from '../../interfaces/interaces';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,25 @@ export class StockService {
       .pipe(
         tap((data) => {
           this.cache.set(cacheKey, data); //cache the data
+        })
+      );
+  }
+
+  getStockMetaData(symbol: string): Observable<StockMetaData> {
+    return this.http
+      .get(
+        `${this.baseUrl}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${this.key}`
+      )
+      .pipe(
+        map((response: any) => {
+          const metaData = response['Meta Data'];
+          return {
+            information: metaData['1. Information'],
+            symbol: metaData['2. Symbol'],
+            lastRefreshed: metaData['3. Last Refreshed'],
+            outputSize: metaData['4. Output Size'],
+            timeZone: metaData['5. Time Zone'],
+          };
         })
       );
   }

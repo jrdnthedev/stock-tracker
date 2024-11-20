@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { StockService } from '../../services/stock/stock.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { StockMetaData } from '../../interfaces/interaces';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,9 +13,9 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardComponent {
   stockService = inject(StockService);
-  stockData$: any;
+  stockData$!: Observable<StockMetaData>;
 
   ngOnInit() {
-    this.stockData$ = this.stockService.getStockData('AAPL');
+    this.stockData$ = this.stockService.getStockMetaData('AAPL');
   }
 }

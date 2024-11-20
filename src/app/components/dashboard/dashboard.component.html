@@ -1,12 +1,12 @@
 <p>dashboard works!</p>
 <div>
   <h1>Stock Data</h1>
-  @if(stockData$ | async) {
-  <tr>
-    <td>{{ stockData$.symbol }}</td>
-    <td>{{ stockData$.price }}</td>
-    <td>{{ stockData$.change }}</td>
-    <td>{{ stockData$.percentChange }}</td>
-  </tr>
+  @if(stockData$ | async; as stock) {
+  <p>{{ stock.information }}</p>
+  <p>{{ stock.lastRefreshed }}</p>
+  <p>{{ stock.outputSize }}</p>
+  <p>{{ stock.timeZone }}</p>
+  } @else {
+  <p>no stock data available</p>
   }
 </div>

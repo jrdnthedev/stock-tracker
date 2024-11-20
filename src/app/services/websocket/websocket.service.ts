@@ -15,7 +15,16 @@ export class WebsocketService {
       //emit every second
       switchMap(() => this.stockService.getStockData(symbol)),
       map((data) => {
-        return data['Time Series (Daily)'];
+        const timeSeries = data['Time Series (1min)'];
+        const latestKey = Object.keys(timeSeries)[0];
+        const latestData = timeSeries[latestKey];
+        return {
+          time: latestKey,
+          open: latestData['1. open'],
+          high: latestData['2. high'],
+          low: latestData['3. low'],
+          close: latestData['4. close'],
+        };
       })
     );
   }

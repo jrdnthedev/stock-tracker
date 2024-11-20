@@ -4,6 +4,7 @@ import { StockDetailsComponent } from '../../components/stock-details/stock-deta
 import { WatchlistComponent } from '../../components/watchlist/watchlist.component';
 import { StockService } from '../../services/stock/stock.service';
 import { CommonModule } from '@angular/common';
+import { DashboardComponent } from '../../components/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
     StockDetailsComponent,
     WatchlistComponent,
     CommonModule,
+    DashboardComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
