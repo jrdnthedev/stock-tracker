@@ -13,7 +13,6 @@ export class StockDetailsComponent {
   private watchlistService = inject(WatchlistService);
 
   addToWatchlist(stock: any) {
-    console.log(stock.Symbol);
     this.watchlistService.addToWatchlist(stock.Symbol);
   }
 }
