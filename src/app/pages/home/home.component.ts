@@ -5,6 +5,7 @@ import { WatchlistComponent } from '../../components/watchlist/watchlist.compone
 import { StockService } from '../../services/stock/stock.service';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from '../../components/dashboard/dashboard.component';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,9 @@ import { DashboardComponent } from '../../components/dashboard/dashboard.compone
 })
 export class HomeComponent {
   private stockService = inject(StockService);
+  private searchSubject = new Subject<string>();
+  searchResult: string | null = null;
+
   stockDetails$ = {
     Symbol: 'IBM',
     AssetType: 'Common Stock',
@@ -77,9 +81,20 @@ export class HomeComponent {
     ExDividendDate: '2024-11-12',
   };
 
-  // handleSearch(searchString: string) {
-  //   this.stockDetails$ = this.stockService.getCompanyDetails(
-  //     searchString.toLocaleUpperCase()
-  //   );
-  // }
+  ngOnInit() {
+    this.searchSubject
+      .pipe(debounceTime(1000), distinctUntilChanged())
+      .subscribe((searchItem) => {
+        this.searchResult = searchItem;
+        this.performSearch(searchItem);
+      });
+  }
+
+  onSearch(value: string) {
+    this.searchSubject.next(value); // Push the value into the Subject
+  }
+
+  performSearch(term: string) {
+    console.log('Performing API call with:', term);
+  }
 }
