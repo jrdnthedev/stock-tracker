@@ -24,15 +24,15 @@ export class WatchlistService {
     return this.watchlist.value;
   }
 
-  addToWatchlist(stockSymbol: string) {
-    const currentWatchlist = this.getList();
-    if (!currentWatchlist.includes(stockSymbol)) {
-      const updatedWatchlist = [...currentWatchlist, stockSymbol];
-      this.setList(updatedWatchlist);
-    } else {
-      console.log('Stock already in watchlist');
-    }
-  }
+  // addToWatchlist(stockSymbol: string) {
+  //   const currentWatchlist = this.getList();
+  //   if (!currentWatchlist.includes(stockSymbol)) {
+  //     const updatedWatchlist = [...currentWatchlist, stockSymbol];
+  //     this.setList(updatedWatchlist);
+  //   } else {
+  //     console.log('Stock already in watchlist');
+  //   }
+  // }
 
   removeFromWatchlist(stockSymbol: string) {
     const currentWatchlist = this.getList();

@@ -11,4 +11,9 @@ import { WatchlistService } from '../../services/watchlist/watchlist.service';
 export class StockDetailsComponent {
   @Input() stock: any;
   watchlistService = inject(WatchlistService);
+
+  addToWatchlist(stock: string) {
+    const updatedWatchlist = [...this.watchlistService.getList(), stock];
+    this.watchlistService.setList(updatedWatchlist);
+  }
 }

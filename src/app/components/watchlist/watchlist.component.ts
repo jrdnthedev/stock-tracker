@@ -18,4 +18,11 @@ export class WatchlistComponent {
       this.list = data;
     });
   }
+
+  removeFromWatchlist(stock: string) {
+    const updatedWatchlist = this.watchlistService
+      .getList()
+      .filter((symbol) => symbol !== stock);
+    this.watchlistService.setList(updatedWatchlist);
+  }
 }

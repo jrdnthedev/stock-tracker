@@ -26,11 +26,11 @@ export class StockService {
 
   constructor() {}
 
-  setStocks(data: any[]): void {
+  private setStocks(data: any[]): void {
     this.stockSubject.next(data);
   }
 
-  getStocks() {
+  private getStocks() {
     return this.stockSubject.value;
   }
 
@@ -67,8 +67,8 @@ export class StockService {
           };
 
           // Add the new update to the stockSubject
-          const currentData = this.stockSubject.value;
-          this.stockSubject.next([stockUpdate, ...currentData].slice(0, 10)); // Keep only the 10 latest updates
+          const currentData = this.getStocks();
+          this.setStocks([stockUpdate, ...currentData].slice(0, 10)); // Keep only the 10 latest updates
         }
       });
   }
