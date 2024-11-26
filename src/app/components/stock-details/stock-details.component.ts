@@ -13,7 +13,11 @@ export class StockDetailsComponent {
   watchlistService = inject(WatchlistService);
 
   addToWatchlist(stock: string) {
-    const updatedWatchlist = [...this.watchlistService.getList(), stock];
-    this.watchlistService.setList(updatedWatchlist);
+    if (!this.watchlistService.getList().includes(stock)) {
+      const updatedWatchlist = [...this.watchlistService.getList(), stock];
+      this.watchlistService.setList(updatedWatchlist);
+    } else {
+      console.log('Stock already in watchlist');
+    }
   }
 }
