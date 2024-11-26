@@ -23,7 +23,6 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 export class HomeComponent {
   private stockService = inject(StockService);
   private searchSubject = new Subject<string>();
-  searchResult: string | null = null;
 
   stockDetails$ = {
     Symbol: 'IBM',
@@ -85,13 +84,12 @@ export class HomeComponent {
     this.searchSubject
       .pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe((searchItem) => {
-        this.searchResult = searchItem;
         this.performSearch(searchItem);
       });
   }
 
   onSearch(value: string) {
-    this.searchSubject.next(value); // Push the value into the Subject
+    this.searchSubject.next(value);
   }
 
   performSearch(term: string) {
