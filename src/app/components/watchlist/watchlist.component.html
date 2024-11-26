@@ -1,11 +1,11 @@
 <section>
   <h2>Watchlist</h2>
 
-  @for(item of list$ | async; track $index) {
+  @for(item of list; track $index) {
   <div class="card">
     <h3>{{ item }}</h3>
     <p>dummy content</p>
-    <button (click)="remove(item)">Remove</button>
+    <button (click)="watchlistService.removeFromWatchlist(item)">Remove</button>
   </div>
   }
 </section>

@@ -10,10 +10,12 @@ import { WatchlistService } from '../../services/watchlist/watchlist.service';
   styleUrl: './watchlist.component.scss',
 })
 export class WatchlistComponent {
-  private watchlistService = inject(WatchlistService);
-  list$ = this.watchlistService.watchlist;
+  watchlistService = inject(WatchlistService);
+  list!: string[];
 
-  remove(symbol: string) {
-    this.watchlistService.removeFromWatchlist(symbol);
+  ngOnInit() {
+    this.watchlistService.watchlist$.subscribe((data) => {
+      this.list = data;
+    });
   }
 }

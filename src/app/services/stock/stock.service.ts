@@ -1,9 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { envrionment } from '../../../../environments/environment';
-import { COMPANY_PROFILE } from '../../types/stock.const';
+import { COMPANY_PROFILE, TIME_SERIES } from '../../types/stock.const';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, tap } from 'rxjs';
-import { StockMetaData } from '../../interfaces/interaces';
+import {
+  BehaviorSubject,
+  interval,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { StockMetaData } from '../../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -13,18 +21,29 @@ export class StockService {
   baseUrl = 'https://www.alphavantage.co/query';
   http = inject(HttpClient);
   private cache = new Map<string, any>();
+  private stockSubject = new BehaviorSubject<any[]>([]);
+  stocks$ = this.stockSubject.asObservable();
+
   constructor() {}
+
+  setStocks(data: any[]): void {
+    this.stockSubject.next(data);
+  }
+
+  getStocks() {
+    return this.stockSubject.value;
+  }
 
   getStockData(symbol: string): Observable<any> {
     const cacheKey = `stock-${symbol}`;
     const cachedData = this.cache.get(cacheKey);
     if (cachedData) {
-      return cachedData;
+      return of(cachedData);
     }
 
     return this.http
       .get(
-        `${this.baseUrl}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${this.key}`
+        `${this.baseUrl}?function=${TIME_SERIES.INTRADAY}&symbol=${symbol}&interval=5min&apikey=${this.key}`
       )
       .pipe(
         tap((data) => {
@@ -33,33 +52,35 @@ export class StockService {
       );
   }
 
-  getStockMetaData(symbol: string): Observable<StockMetaData> {
-    return this.http
-      .get(
-        `${this.baseUrl}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${this.key}`
-      )
-      .pipe(
-        map((response: any) => {
-          const metaData = response['Meta Data'];
-          return {
-            information: metaData['1. Information'],
-            symbol: metaData['2. Symbol'],
-            lastRefreshed: metaData['3. Last Refreshed'],
-            outputSize: metaData['4. Output Size'],
-            timeZone: metaData['5. Time Zone'],
+  getLiveStockData(symbol: string) {
+    // Poll the API every minute for new data
+    return interval(60000)
+      .pipe(switchMap(() => this.getStockData(symbol)))
+      .subscribe((data) => {
+        const timeSeries = data['Time Series (5min)'];
+        if (timeSeries) {
+          const latest = Object.keys(timeSeries)[0];
+          const stockUpdate = {
+            symbol: symbol,
+            price: timeSeries[latest]['1. open'],
+            time: latest,
           };
-        })
-      );
+
+          // Add the new update to the stockSubject
+          const currentData = this.stockSubject.value;
+          this.stockSubject.next([stockUpdate, ...currentData].slice(0, 10)); // Keep only the 10 latest updates
+        }
+      });
   }
 
   getCompanyDetails(symbol: string): Observable<any> {
     console.log(symbol);
     return this.http.get(
-      `${this.baseUrl}?function=OVERVIEW&symbol=${symbol}&apikey=${this.key}`
+      `${this.baseUrl}?function=${COMPANY_PROFILE.OVERVIEW}&symbol=${symbol}&apikey=${this.key}`
     );
   }
 
-  getETF(symbol: string, profile: COMPANY_PROFILE): Observable<any> {
+  getETF(symbol: string, profile: any): Observable<any> {
     return this.http.get(
       `${this.baseUrl}?function=${profile}&symbol=${symbol}&apikey=${this.key}`
     );

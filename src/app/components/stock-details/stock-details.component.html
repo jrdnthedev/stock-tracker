@@ -8,6 +8,8 @@
   <p>{{ stock.Industry }}</p>
   <p>{{ stock.Description }}</p>
   <div id="add-container">
-    <button (click)="addToWatchlist(stock)">Add to Watchlist</button>
+    <button (click)="watchlistService.addToWatchlist(stock.Symbol)">
+      Add to Watchlist
+    </button>
   </div>
 </section>

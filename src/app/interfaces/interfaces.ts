@@ -1,5 +1,5 @@
 export interface StockMetaData {
-  information: string;
+  price: string;
   symbol: string;
   lastRefreshed: string;
   outputSize: string;

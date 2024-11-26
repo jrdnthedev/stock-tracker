@@ -10,9 +10,5 @@ import { WatchlistService } from '../../services/watchlist/watchlist.service';
 })
 export class StockDetailsComponent {
   @Input() stock: any;
-  private watchlistService = inject(WatchlistService);
-
-  addToWatchlist(stock: any) {
-    this.watchlistService.addToWatchlist(stock.Symbol);
-  }
+  watchlistService = inject(WatchlistService);
 }
