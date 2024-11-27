@@ -46,6 +46,9 @@ export class StockService {
         `${this.baseUrl}?function=${TIME_SERIES.INTRADAY}&symbol=${symbol}&interval=5min&apikey=${this.key}`
       )
       .pipe(
+        tap((data) => {
+          this.cache.set(cacheKey, data); //cache the data
+        }),
         map((data: any) => {
           const timeSeries = data['Time Series (5min)'];
           if (timeSeries) {
@@ -91,11 +94,18 @@ export class StockService {
     const cacheKey = `stock-${symbol}`;
     const cachedData = this.cache.get(cacheKey);
     if (cachedData) {
+      console.log('Returning cached data');
       return of(cachedData);
     }
-    return this.http.get(
-      `${this.baseUrl}?function=${COMPANY_PROFILE.OVERVIEW}&symbol=${symbol}&apikey=${this.key}`
-    );
+    return this.http
+      .get(
+        `${this.baseUrl}?function=${COMPANY_PROFILE.OVERVIEW}&symbol=${symbol}&apikey=${this.key}`
+      )
+      .pipe(
+        tap((data) => {
+          this.cache.set(cacheKey, data);
+        })
+      );
   }
 
   getETF(symbol: string, profile: any): Observable<any> {

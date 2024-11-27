@@ -1,10 +1,11 @@
 import { Component, inject, Input } from '@angular/core';
 import { WatchlistService } from '../../services/watchlist/watchlist.service';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-stock-details',
   standalone: true,
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './stock-details.component.html',
   styleUrl: './stock-details.component.scss',
 })
