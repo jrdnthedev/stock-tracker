@@ -46,8 +46,22 @@ export class StockService {
         `${this.baseUrl}?function=${TIME_SERIES.INTRADAY}&symbol=${symbol}&interval=5min&apikey=${this.key}`
       )
       .pipe(
-        tap((data) => {
-          this.cache.set(cacheKey, data); //cache the data
+        map((data: any) => {
+          const timeSeries = data['Time Series (5min)'];
+          if (timeSeries) {
+            const latest = Object.keys(timeSeries)[0];
+            const stockUpdate = {
+              symbol: symbol,
+              price: timeSeries[latest]['1. open'],
+              time: latest,
+            };
+
+            // Add the new update to the stockSubject
+            const currentData = this.getStocks();
+            this.setStocks([stockUpdate, ...currentData].slice(0, 10)); // Keep only the 10 latest updates
+            return stockUpdate;
+          }
+          return null;
         })
       );
   }
@@ -74,7 +88,11 @@ export class StockService {
   }
 
   getCompanyDetails(symbol: string): Observable<any> {
-    console.log(symbol);
+    const cacheKey = `stock-${symbol}`;
+    const cachedData = this.cache.get(cacheKey);
+    if (cachedData) {
+      return of(cachedData);
+    }
     return this.http.get(
       `${this.baseUrl}?function=${COMPANY_PROFILE.OVERVIEW}&symbol=${symbol}&apikey=${this.key}`
     );

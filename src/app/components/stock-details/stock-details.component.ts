@@ -12,6 +12,9 @@ export class StockDetailsComponent {
   @Input() stock: any;
   watchlistService = inject(WatchlistService);
 
+  ngOnInit() {
+    console.log('Stock details:', this.stock);
+  }
   addToWatchlist(stock: string) {
     if (!this.watchlistService.getList().includes(stock)) {
       const updatedWatchlist = [...this.watchlistService.getList(), stock];

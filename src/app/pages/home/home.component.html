@@ -2,8 +2,8 @@
 
 <div id="home-container">
   <div>
-    @if(stockDetails$) {
-    <app-stock-details [stock]="stockDetails$"></app-stock-details>
+    @if(stockDetails) {
+    <app-stock-details [stock]="stockDetails"></app-stock-details>
     } @else {
     <p>you have no stock details at this time</p>
     }
