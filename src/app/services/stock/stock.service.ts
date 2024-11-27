@@ -11,7 +11,6 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { StockMetaData } from '../../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
