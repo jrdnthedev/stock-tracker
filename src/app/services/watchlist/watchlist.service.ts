@@ -17,4 +17,16 @@ export class WatchlistService {
   getList() {
     return this.watchlist.value;
   }
+
+  removeFromWatchlist(stock: string) {
+    const updatedWatchlist = this.getList().filter(
+      (symbol) => symbol !== stock
+    );
+    this.setList(updatedWatchlist);
+  }
+
+  addToWatchlist(stock: string) {
+    const updatedWatchlist = this.getList().concat(stock);
+    this.setList(updatedWatchlist);
+  }
 }

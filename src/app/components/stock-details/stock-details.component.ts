@@ -18,8 +18,7 @@ export class StockDetailsComponent {
   }
   addToWatchlist(stock: string) {
     if (!this.watchlistService.getList().includes(stock)) {
-      const updatedWatchlist = [...this.watchlistService.getList(), stock];
-      this.watchlistService.setList(updatedWatchlist);
+      this.watchlistService.addToWatchlist(stock);
     } else {
       console.log('Stock already in watchlist');
     }

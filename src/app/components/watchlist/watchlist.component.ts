@@ -20,9 +20,6 @@ export class WatchlistComponent {
   }
 
   removeFromWatchlist(stock: string) {
-    const updatedWatchlist = this.watchlistService
-      .getList()
-      .filter((symbol) => symbol !== stock);
-    this.watchlistService.setList(updatedWatchlist);
+    this.watchlistService.removeFromWatchlist(stock);
   }
 }
