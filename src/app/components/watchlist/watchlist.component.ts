@@ -10,7 +10,7 @@ import { WatchlistService } from '../../services/watchlist/watchlist.service';
   styleUrl: './watchlist.component.scss',
 })
 export class WatchlistComponent {
-  watchlistService = inject(WatchlistService);
+  private watchlistService = inject(WatchlistService);
   list!: string[];
 
   ngOnInit() {

@@ -16,9 +16,9 @@ import {
   providedIn: 'root',
 })
 export class StockService {
-  key = envrionment.stockApiKey;
-  baseUrl = 'https://www.alphavantage.co/query';
-  http = inject(HttpClient);
+  private key = envrionment.stockApiKey;
+  private baseUrl = 'https://www.alphavantage.co/query';
+  private http = inject(HttpClient);
   private cache = new Map<string, any>();
   private stockSubject = new BehaviorSubject<any[]>([]);
   stocks$ = this.stockSubject.asObservable();

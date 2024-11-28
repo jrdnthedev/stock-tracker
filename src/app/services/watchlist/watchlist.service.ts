@@ -5,13 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class WatchlistService {
-  watchlist = new BehaviorSubject<string[]>([
-    'AAPL',
-    'GOOGL',
-    'MSFT',
-    'AMZN',
-    'TSLA',
-  ]);
+  private watchlist = new BehaviorSubject<string[]>([]);
   watchlist$ = this.watchlist.asObservable();
 
   constructor() {}
